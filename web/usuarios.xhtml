@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gestion de usuarios</title>
+    </h:head>
+    <h:body>
+        <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
+        <p:panel id="panel" header="Nuevo usuario" style="margin-bottom:10px;">
+            <h:form id="formInsertar">
+                <h:panelGrid columns="6">
+                    <p:outputLabel value="DUI"/>
+                    <p:inputText id="usuDui" value="#{usuarioBean.usuario.usuDui}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="NIT"/>
+                    <p:inputText id="usuNit" value="#{usuarioBean.usuario.usuNit}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText id="usuNombre" value="#{usuarioBean.usuario.usuNombre}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Apellido"/>
+                    <p:inputText id="usuApellido" value="#{usuarioBean.usuario.usuApellido}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Dirección"/>
+                    <p:inputText id="usuDirección" value="#{usuarioBean.usuario.usuDireccion}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Telefono"/>
+                    <p:inputText id="usuTelefono" value="#{usuarioBean.usuario.usuTelefono}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="E-mail"/>
+                    <p:inputText id="usuEmail" value="#{usuarioBean.usuario.usuEmail}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Rol"/>
+                    <p:selectOneMenu id="tusuIdtipousuario" value="#{usuarioBean.usuario.tipoUsuario.tusuIdtipousuario}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione categoría" />
+                        <f:selectItems value="#{usuarioBean.getTiposUsuario()}" />
+                    </p:selectOneMenu>
+                    <h:link outcome="tiposUsuario" value="Agergar Nuevo Rol" />
+                    <h:outputLabel />
+                    <p:outputLabel value="Alias"/>
+                    <p:inputText id="usuAlias" value="#{usuarioBean.usuario.usuAlias}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Contraseña"/>
+                    <p:password feedback="true" id="usuContrasena" value="#{usuarioBean.usuario.usuContrasena}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                </h:panelGrid>
+                <br />
+                <p:commandButton actionListener="#{usuarioBean.insertar()}" value="Ingresar usuario"
+                    icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel2" header="Listado de usuarios" style="margin-bottom:10px;">
+            <h:form id="formMostrar">
+                <p:dataTable var="usu" value="#{usuarioBean.usuarios}"
+                    emptyMessage="No hay productos en la base de datos"
+                    paginator="true" rows="10" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                    {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10">
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{usu.usuNombre}"/>
+                        </p:column>
+                        <p:column headerText="Apellido">
+                            <h:outputText value="#{usu.usuApellido}"/>
+                        </p:column>
+                        <p:column headerText="DUI">
+                            <h:outputText value="#{usu.usuDui}"/>
+                        </p:column>
+                        <p:column headerText="NIT">
+                            <h:outputText value="#{usu.usuNit}"/>
+                        </p:column>
+                        <p:column headerText="Dirección">
+                            <h:outputText value="#{usu.usuDireccion}"/>
+                        </p:column>
+                        <p:column headerText="Teléfono">
+                            <h:outputText value="#{usu.usuTelefono}"/>
+                        </p:column>
+                        <p:column headerText="E-mail">
+                            <h:outputText value="#{usu.usuEmail}"/>
+                        </p:column>
+                        <p:column headerText="Rol">
+                            <h:outputText value="#{usu.tipoUsuario.tusuTipo}"/>
+                        </p:column>
+                        <p:column headerText="Alias">
+                            <h:outputText value="#{usu.usuAlias}"/>
+                        </p:column>
+                        <p:column headerText="Contraseña">
+                            <h:outputText value="#{usu.usuContrasena}"/>
+                        </p:column>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="{Bean.objeto}" value="#{usu}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgeliminar').show();">
+                                <f:setPropertyActionListener target="{Bean.objeto}" value="#{usu}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog id="dlg" header="Modificar unidad de medida" showEffect="fade" hideEffect="fade"
+            widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="250">
+            <h:form id="formModificar">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="DUI"/>
+                    <p:inputText id="usuDui" value="#{usuarioBean.usuario.usuDui}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="NIT"/>
+                    <p:inputText id="usuNit" value="#{usuarioBean.usuario.usuNit}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText id="usuNombre" value="#{usuarioBean.usuario.usuNombre}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Apellido"/>
+                    <p:inputText id="usuApellido" value="#{usuarioBean.usuario.usuApellido}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Dirección"/>
+                    <p:inputText id="usuDirección" value="#{usuarioBean.usuario.usuDireccion}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Telefono"/>
+                    <p:inputText id="usuTelefono" value="#{usuarioBean.usuario.usuTelefono}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="E-mail"/>
+                    <p:inputText id="usuEmail" value="#{usuarioBean.usuario.usuEmail}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Rol"/>
+                    <p:selectOneMenu id="tipoUsuario" value="#{usuarioBean.usuario.tipoUsuario.tusuIdtipousuario}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione categoría" />
+                        <f:selectItems value="#{usuarioBean.getTiposUsuario()}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Alias"/>
+                    <p:inputText id="usuAlias" value="#{usuarioBean.usuario.usuAlias}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Contraseña"/>
+                    <p:password feedback="true" id="usuContrasena" value="#{usuarioBean.usuario.usuContrasena}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                </p:panelGrid>
+                <p:commandButton value="Modificar" update=":formMostrar"
+                    actionListener="#{usuarioBean.modificar()}"
+                    oncomplete="PF('dlgmodificar').hide();"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dlg2" header="Eliminar ..."
+            showEffect="explode" hideEffect="explode"
+            widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+                <h:outputText value="¿Desea eliminar este registro?"/>
+                <p:commandButton value="Si" actionListener="#{usuarioBean.eliminar()}"
+                    update=":formMostrar" oncomplete="PF('dlgeliminar').hide();"/>
+                <p:commandButton value="No" onclick="PF('dlgeliminar').hide()"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

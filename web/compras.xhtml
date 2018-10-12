@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gestion de compras</title>
+    </h:head>
+    <h:body>
+        <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
+        <p:panel id="panel" header="Nueva compra" style="margin-bottom:10px;">
+            <h:form id="formInsertar">
+                <h:panelGrid columns="9">
+                    <p:outputLabel value="Usuario"/>
+                    <p:inputText id="compraUsuario" value="" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" disabled="true"/>
+                    <p:outputLabel />
+                    <p:outputLabel value="Proveedor"/>
+                    <p:inputText id="compraProveedor" value="" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" />
+                    <p:outputLabel />
+                    <p:outputLabel value="Comprobante"/>
+                    <p:inputText id="compraComprobante" value="" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" disabled="true" />
+                    <p:fileUpload label="Elegir" value="" mode="simple" skinSimple="true" />
+                </h:panelGrid>
+                <p:commandButton actionListener="{Bean.insertar()}" value="Registrar compra"
+                    icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel2" header="Listado de compras" style="margin-bottom:10px;">
+            <h:form id="formMostrar">
+                <p:dataTable var="abrev" value="{Bean.Lista}"
+                    emptyMessage="No hay ... en la base de datos"
+                    paginator="true" rows="10" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                    {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10">
+                        <p:column headerText="Id Compra">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Usuario">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Proveedor">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Producto">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Fecha">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Comprobante">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="{Bean.objeto}" value="{abrev}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgeliminar').show();">
+                                <f:setPropertyActionListener target="{Bean.objeto}" value="#{abrev}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel3" header="Nuevo detalle de compra" style="margin-bottom:10px;">
+            <h:form id="formInsertar2">
+                <h:panelGrid columns="4">
+                    <p:outputLabel value="Compra No"/>
+                    <p:inputText id="dcompCompra" value="" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" disabled="true"/>
+                    <p:outputLabel value="Producto"/>
+                    <p:inputText id="dcompProducto" value="" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Cantidad"/>
+                    <p:spinner id="dcompCantidad" value="" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" />
+                    <p:outputLabel value="Costo"/>
+                    <p:inputNumber id="dcompCosto" value="" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" />
+                </h:panelGrid>
+                <p:commandButton actionListener="{Bean.insertar()}" value="Ingresar ..."
+                    icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel4" header="Detalles de compras" style="margin-bottom:10px;">
+            <h:form id="formMostrar2">
+                <p:dataTable var="abrev" value="{Bean.Lista}"
+                    emptyMessage="No hay ... en la base de datos"
+                    paginator="true" rows="10" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                    {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10">
+                        <p:column headerText="Id Compra">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Producto">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Cantidad">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Costo">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Fecha">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="{Bean.objeto}" value="{abrev}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgeliminar').show();">
+                                <f:setPropertyActionListener target="{Bean.objeto}" value="#{abrev}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog id="dlg" header="Modificar unidad de medida" showEffect="fade" hideEffect="fade"
+            widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="250">
+            <h:form id="formModificar">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Unidad de medida"/>
+                    <p:inputText id="idCampo" value="{Bean.objeto.idCampo}" required="true"
+                        requiredMessage="Ingrese ..."/>
+                </p:panelGrid>
+                <p:commandButton value="Modificar" update=":formMostrar"
+                    actionListener="{Bean.modificar()}"
+                    oncomplete="PF('dlgmodificar').hide();"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dlg2" header="Eliminar ..."
+            showEffect="explode" hideEffect="explode"
+            widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+                <h:outputText value="¿Desea eliminar este registro?"/>
+                <p:commandButton value="Si" actionListener="{Bean.eliminar()}"
+                    update=":formMostrar" oncomplete="PF('dlgeliminar').hide();"/>
+                <p:commandButton value="No" onclick="PF('dlgeliminar').hide()"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

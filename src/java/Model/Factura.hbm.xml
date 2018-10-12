@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-23-2018 06:43:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Factura" table="FACTURA" schema="DB_TIENDAANGELITO" optimistic-lock="version">
+        <id name="factIdfactura" type="big_decimal">
+            <column name="FACT_IDFACTURA" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cliente" class="Model.Cliente" fetch="select">
+            <column name="FACT_CLIENTE_DUI" length="9" />
+        </many-to-one>
+        <many-to-one name="usuario" class="Model.Usuario" fetch="select">
+            <column name="FACT_USUARIO_DUI" length="9" not-null="true" />
+        </many-to-one>
+        <property name="factFecha" type="date">
+            <column name="FACT_FECHA" length="7" not-null="true" />
+        </property>
+        <set name="detalleFacturas" table="DETALLE_FACTURA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="DETF_IDFACTURA" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="Model.DetalleFactura" />
+        </set>
+    </class>
+</hibernate-mapping>

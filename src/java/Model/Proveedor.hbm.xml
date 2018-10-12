@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-23-2018 06:43:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Proveedor" table="PROVEEDOR" schema="DB_TIENDAANGELITO" optimistic-lock="version">
+        <id name="provIdproveedor" type="big_decimal">
+            <column name="PROV_IDPROVEEDOR" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="provNit" type="string">
+            <column name="PROV_NIT" length="14" />
+        </property>
+        <property name="provDui" type="string">
+            <column name="PROV_DUI" length="9" />
+        </property>
+        <property name="provNombre" type="string">
+            <column name="PROV_NOMBRE" length="50" not-null="true" />
+        </property>
+        <property name="provApellido" type="string">
+            <column name="PROV_APELLIDO" length="50" />
+        </property>
+        <property name="provDireccion" type="string">
+            <column name="PROV_DIRECCION" />
+        </property>
+        <property name="provTelefono" type="string">
+            <column name="PROV_TELEFONO" length="8" />
+        </property>
+        <property name="provEmail" type="string">
+            <column name="PROV_EMAIL" length="50" />
+        </property>
+        <property name="provJuridica" type="java.lang.Character">
+            <column name="PROV_JURIDICA" length="1" />
+        </property>
+        <property name="provFrecDias" type="big_decimal">
+            <column name="PROV_FREC_DIAS" precision="22" scale="0" />
+        </property>
+        <set name="compras" table="COMPRA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="COMPRA_IDPROVEEDOR" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="Model.Compra" />
+        </set>
+    </class>
+</hibernate-mapping>

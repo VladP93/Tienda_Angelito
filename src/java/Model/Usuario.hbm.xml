@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-23-2018 06:43:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Usuario" table="USUARIO" schema="DB_TIENDAANGELITO" optimistic-lock="version">
+        <id name="usuDui" type="string">
+            <column name="USU_DUI" length="9" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tipoUsuario" class="Model.TipoUsuario" fetch="select">
+            <column name="USU_IDTIPOUSUARIO" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="usuNit" type="string">
+            <column name="USU_NIT" length="14" unique="true" />
+        </property>
+        <property name="usuNombre" type="string">
+            <column name="USU_NOMBRE" length="50" not-null="true" />
+        </property>
+        <property name="usuApellido" type="string">
+            <column name="USU_APELLIDO" length="50" not-null="true" />
+        </property>
+        <property name="usuDireccion" type="string">
+            <column name="USU_DIRECCION" not-null="true" />
+        </property>
+        <property name="usuTelefono" type="string">
+            <column name="USU_TELEFONO" length="8" />
+        </property>
+        <property name="usuEmail" type="string">
+            <column name="USU_EMAIL" length="50" />
+        </property>
+        <property name="usuAlias" type="string">
+            <column name="USU_ALIAS" length="20" not-null="true" />
+        </property>
+        <property name="usuContrasena" type="string">
+            <column name="USU_CONTRASENA" length="20" not-null="true" />
+        </property>
+        <set name="facturas" table="FACTURA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="FACT_USUARIO_DUI" length="9" not-null="true" />
+            </key>
+            <one-to-many class="Model.Factura" />
+        </set>
+        <set name="compras" table="COMPRA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="COMPRA_USUARIO_DUI" length="9" not-null="true" />
+            </key>
+            <one-to-many class="Model.Compra" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-23-2018 06:43:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.TipoUsuario" table="TIPO_USUARIO" schema="DB_TIENDAANGELITO" optimistic-lock="version">
+        <id name="tusuIdtipousuario" type="big_decimal">
+            <column name="TUSU_IDTIPOUSUARIO" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="tusuTipo" type="string">
+            <column name="TUSU_TIPO" length="20" not-null="true" />
+        </property>
+        <set name="usuarios" table="USUARIO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USU_IDTIPOUSUARIO" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="Model.Usuario" />
+        </set>
+    </class>
+</hibernate-mapping>

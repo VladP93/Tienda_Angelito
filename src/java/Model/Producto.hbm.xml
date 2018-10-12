@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-23-2018 06:43:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Producto" table="PRODUCTO" schema="DB_TIENDAANGELITO" optimistic-lock="version">
+        <id name="prodCodproducto" type="big_decimal">
+            <column name="PROD_CODPRODUCTO" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="unidadMedida" class="Model.UnidadMedida" fetch="select">
+            <column name="PROD_IDUNIDADMEDIDA" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="categoria" class="Model.Categoria" fetch="select">
+            <column name="PROD_IDCATEGORIA" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="prodNombre" type="string">
+            <column name="PROD_NOMBRE" length="100" not-null="true" />
+        </property>
+        <property name="prodDescripcion" type="string">
+            <column name="PROD_DESCRIPCION" />
+        </property>
+        <property name="prodPrecioUnitario" type="big_decimal">
+            <column name="PROD_PRECIO_UNITARIO" precision="9" not-null="true" />
+        </property>
+        <property name="prodPrecioMayoreo" type="big_decimal">
+            <column name="PROD_PRECIO_MAYOREO" precision="9" not-null="true" />
+        </property>
+        <property name="prodCantMinMayoreo" type="big_decimal">
+            <column name="PROD_CANT_MIN_MAYOREO" precision="22" scale="0" />
+        </property>
+        <property name="prodCantidad" type="big_decimal">
+            <column name="PROD_CANTIDAD" precision="22" scale="0" />
+        </property>
+        <property name="prodAlertaCantidad" type="big_decimal">
+            <column name="PROD_ALERTA_CANTIDAD" precision="22" scale="0" not-null="true" />
+        </property>
+        <set name="detalleCompras" table="DETALLE_COMPRA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="DCOMP_CODPRODUCTO" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="Model.DetalleCompra" />
+        </set>
+        <set name="detalleFacturas" table="DETALLE_FACTURA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="DETF_CODPRODUCTO" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="Model.DetalleFactura" />
+        </set>
+        <set name="lotes" table="LOTE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="LOT_CODPRODUCTO" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="Model.Lote" />
+        </set>
+    </class>
+</hibernate-mapping>

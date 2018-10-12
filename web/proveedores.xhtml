@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gestion de Proveedores</title>
+    </h:head>
+    <h:body>
+        <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
+        <p:panel id="panel" header="Nuevo Proveedor" style="margin-bottom:10px;">
+            <h:form id="formInsertar">
+                <h:panelGrid columns="6">
+                    <p:outputLabel value="DUI"/>
+                    <p:inputText id="provDui" value="#{proveedorBean.proveedor.provDui}" autocomplete="off" />
+                    <p:outputLabel value="NIT"/>
+                    <p:inputText id="provNit" value="#{proveedorBean.proveedor.provNit}" autocomplete="off" />
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText id="provNombre" value="#{proveedorBean.proveedor.provNombre}" autocomplete="off"
+                        required="true" requiredMessage="El nombre del proveedor es obligatorio"/>
+                    <p:outputLabel value="Apellido"/>
+                    <p:inputText id="provApellido" value="#{proveedorBean.proveedor.provApellido}" autocomplete="off" />
+                    <p:outputLabel value="Dirección"/>
+                    <p:inputText id="provDireccion" value="#{proveedorBean.proveedor.provDireccion}" autocomplete="off" />
+                    <p:outputLabel value="Teléfono"/>
+                    <p:inputText id="provTelefono" value="#{proveedorBean.proveedor.provTelefono}" autocomplete="off" />
+                    <p:outputLabel value="Correo electrónico"/>
+                    <p:inputText id="provEmail" value="#{proveedorBean.proveedor.provEmail}" autocomplete="off" />
+                    <p:outputLabel value="Persona jurídica: "/>
+                    <p:selectOneMenu id="provJuridica" value="#{proveedorBean.proveedor.provJuridica}" style="width:125px">
+                        <f:selectItem itemLabel="No" itemValue="N" />
+                        <f:selectItem itemLabel="Si" itemValue="S" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Frecuencia (Días)"/>
+                    <p:spinner id="provFrecDias" value="#{proveedorBean.proveedor.provFrecDias}" />
+                </h:panelGrid>
+                <p:commandButton actionListener="#{proveedorBean.insertar()}" value="Ingresar proveedor"
+                    icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel2" header="Listado de proveedores" style="margin-bottom:10px;">
+            <h:form id="formMostrar">
+                <p:dataTable var="prov" value="#{proveedorBean.proveedores}"
+                    emptyMessage="No hay proveedores en la base de datos"
+                    paginator="true" rows="10" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                    {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10">
+                        <p:column headerText="DUI">
+                            <h:outputText value="#{prov.provDui}"/>
+                        </p:column>
+                        <p:column headerText="NIT">
+                            <h:outputText value="#{prov.provNit}"/>
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{prov.provNombre}"/>
+                        </p:column>
+                        <p:column headerText="Apellido">
+                            <h:outputText value="#{prov.provApellido}"/>
+                        </p:column>
+                        <p:column headerText="Dirección">
+                            <h:outputText value="#{prov.provDireccion}"/>
+                        </p:column>
+                        <p:column headerText="Teléfono">
+                            <h:outputText value="#{prov.provTelefono}"/>
+                        </p:column>
+                        <p:column headerText="Correo electrónico">
+                            <h:outputText value="#{prov.provEmail}"/>
+                        </p:column>
+                        <p:column headerText="Persona Jurídica">
+                            <h:outputText value="#{prov.provJuridica}"/>
+                        </p:column>
+                        <p:column headerText="Frecuencia (Días)">
+                            <h:outputText value="#{prov.provFrecDias}"/>
+                        </p:column>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="#{proveedorBean.proveedor}" value="#{prov}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgeliminar').show();">
+                                <f:setPropertyActionListener target="#{proveedorBean.proveedor}" value="#{prov}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog id="dlg" header="Modificar proveedor" showEffect="fade" hideEffect="fade"
+            widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="250">
+            <h:form id="formModificar">
+                <h:panelGrid columns="6">
+                    <p:outputLabel value="DUI"/>
+                    <p:inputText id="provDui" value="#{proveedorBean.proveedor.provDui}" autocomplete="off" />
+                    <p:outputLabel value="NIT"/>
+                    <p:inputText id="provNit" value="#{proveedorBean.proveedor.provNit}" autocomplete="off" />
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText id="provNombre" value="#{proveedorBean.proveedor.provNombre}" autocomplete="off"
+                        required="true" requiredMessage="El nombre del proveedor es obligatorio"/>
+                    <p:outputLabel value="Apellido"/>
+                    <p:inputText id="provApellido" value="#{proveedorBean.proveedor.provApellido}" autocomplete="off" />
+                    <p:outputLabel value="Dirección"/>
+                    <p:inputText id="provDireccion" value="#{proveedorBean.proveedor.provDireccion}" autocomplete="off" />
+                    <p:outputLabel value="Teléfono"/>
+                    <p:inputText id="provTelefono" value="#{proveedorBean.proveedor.provTelefono}" autocomplete="off" />
+                    <p:outputLabel value="Correo electrónico"/>
+                    <p:inputText id="provEmail" value="#{proveedorBean.proveedor.provEmail}" autocomplete="off" />
+                    <p:outputLabel value="Persona jurídica: "/>
+                    <p:selectOneMenu id="provJuridica" value="#{proveedorBean.proveedor.provJuridica}" style="width:125px">
+                        <f:selectItem itemLabel="No" itemValue="N" />
+                        <f:selectItem itemLabel="Si" itemValue="S" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Frecuencia (Días)"/>
+                    <p:spinner id="provFrecDias" value="#{proveedorBean.proveedor.provFrecDias}" />
+                </h:panelGrid>
+                <p:commandButton value="Modificar" update=":formMostrar"
+                    actionListener="#{proveedorBean.modificar()}"
+                    oncomplete="PF('dlgmodificar').hide();"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dlg2" header="Eliminar proveedor"
+            showEffect="explode" hideEffect="explode"
+            widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+                <h:outputText value="¿Desea eliminar este registro?"/>
+                <p:commandButton value="Si" actionListener="#{proveedorBean.eliminar()}"
+                    update=":formMostrar" oncomplete="PF('dlgeliminar').hide();"/>
+                <p:commandButton value="No" onclick="PF('dlgeliminar').hide()"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gestion de productos</title>
+    </h:head>
+    <h:body>
+        <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
+        <p:panel id="panel" header="Nuevo producto" style="margin-bottom:10px;">
+            <h:form id="formInsertar">
+                <h:panelGrid columns="6">
+                    <p:outputLabel value="Codigo"/>
+                    <p:inputText id="prodCodproducto" value="#{productoBean.producto.prodCodproducto}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText id="prodNombre" value="#{productoBean.producto.prodNombre}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Descripción"/>
+                    <p:inputText id="prodDescripcion" value="#{productoBean.producto.prodDescripcion}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Precio Unitario"/>
+                    <p:inputNumber id="prodPrecioUnitario" value="#{productoBean.producto.prodPrecioUnitario}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Precio Mayoreo"/>
+                    <p:inputNumber id="prodPrecioMayoreo" value="#{productoBean.producto.prodPrecioMayoreo}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Minimo al mayoreo"/>
+                    <p:spinner id="prodCantMinMayoreo" value="#{productoBean.producto.prodCantMinMayoreo}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Cantidad"/>
+                    <p:spinner id="prodCantidad" value="#{productoBean.producto.prodCantidad}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Alerta cantidad mínima"/>
+                    <p:spinner id="prodAlertaCantidad" value="#{productoBean.producto.prodAlertaCantidad}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <h:outputLabel />
+                    <h:outputLabel />
+                    <p:outputLabel value="Categoría"/>
+                    <p:selectOneMenu id="catIdcategoria" value="#{productoBean.producto.categoria.catIdcategoria}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione categoría" />
+                        <f:selectItems value="#{productoBean.getCategorias()}" />
+                    </p:selectOneMenu>
+                    <h:link outcome="categorias" value="Agergar Nueva Categoría" />
+                    <h:outputLabel />
+                    <h:outputLabel />
+                    <h:outputLabel />
+                    <p:outputLabel value="Unidad de medida"/>
+                    <p:selectOneMenu id="unmIdunidadmedida" value="#{productoBean.producto.unidadMedida.unmIdunidadmedida}"
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione unidad de medida" />
+                        <f:selectItems value="#{productoBean.getUnidadesMedida()}" />
+                    </p:selectOneMenu>
+                    <h:link outcome="unidadesMedida" value="Agergar Nueva Unidad de Medida" />
+                    <h:outputLabel />
+                </h:panelGrid>
+                <p:commandButton actionListener="#{productoBean.insertar()}" value="Ingresar producto"
+                    icon="ui-icon-disk" update=":formInsertar :mensajes :formMostrar"/>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel2" header="Listado de productos" style="margin-bottom:10px;">
+            <h:form id="formMostrar">
+                <p:dataTable var="prod" value="#{productoBean.productos}"
+                    emptyMessage="No hay productos en la base de datos"
+                    paginator="true" rows="10" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                    {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10" filteredValue="#{productoBean.productoFiltrado}" widgetVar="productosTable">
+                    <f:facet name="header">
+                        <p:outputPanel>
+                            <h:outputText value="Buscar:" />
+                            <p:inputText id="globalFilter" onkeyup="PF('productosTable').filter()" style="width:150px" placeholder="Búsqueda"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    <p:column headerText="Codigo">
+                            <h:outputText value="#{prod.prodCodproducto}"/>
+                        </p:column>
+                    <p:column headerText="Nombre" filterBy="#{prod.prodNombre}" filterStyle="display:none">
+                            <h:outputText value="#{prod.prodNombre}"/>
+                        </p:column>
+                    <p:column headerText="Descripción" filterBy="#{prod.prodDescripcion}" filterStyle="display:none">
+                            <h:outputText value="#{prod.prodDescripcion}"/>
+                        </p:column>
+                        <p:column headerText="categoría">
+                            <h:outputText value="#{prod.categoria.catNombre}"/>
+                        </p:column>
+                        <p:column headerText="Precio unitario">
+                            <h:outputText value="#{prod.prodPrecioUnitario}">
+                                <f:convertNumber pattern="$ #0.00" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="precio mayoreo">
+                            <h:outputText value="#{prod.prodPrecioMayoreo}">
+                                <f:convertNumber pattern="$ #0.00" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Minimo al mayoreo">
+                            <h:outputText value="#{prod.prodCantMinMayoreo}"/>
+                        </p:column>
+                        <p:column headerText="Unidad de medida">
+                            <h:outputText value="#{prod.unidadMedida.unmUnidad}"/>
+                        </p:column>
+                        <p:column headerText="Existencia">
+                            <h:outputText value="#{prod.prodCantidad}"/>
+                        </p:column>
+                        <p:column headerText="Alerta de cantidad mínima">
+                            <h:outputText value="#{prod.prodAlertaCantidad}"/>
+                        </p:column>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="#{productoBean.producto}" value="#{prod}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgeliminar').show();">
+                                <f:setPropertyActionListener target="#{productoBean.producto}" value="#{prod}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog id="dlg" header="Modificar unidad de medida" showEffect="fade" hideEffect="fade"
+            widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="250">
+            <h:form id="formModificar">
+                <h:panelGrid columns="6">
+                    <p:outputLabel value="Codigo"/>
+                    <p:inputText id="prodCodproducto" value="#{productoBean.producto.prodCodproducto}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText id="prodNombre" value="#{productoBean.producto.prodNombre}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Descripción"/>
+                    <p:inputText id="prodDescripcion" value="#{productoBean.producto.prodDescripcion}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Precio Unitario"/>
+                    <p:inputNumber id="prodPrecioUnitario" value="#{productoBean.producto.prodPrecioUnitario}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Precio Mayoreo"/>
+                    <p:inputNumber id="prodPrecioMayoreo" value="#{productoBean.producto.prodPrecioMayoreo}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Minimo al mayoreo"/>
+                    <p:spinner id="prodCantMinMayoreo" value="#{productoBean.producto.prodCantMinMayoreo}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Cantidad"/>
+                    <p:spinner id="prodCantidad" value="#{productoBean.producto.prodCantidad}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:outputLabel value="Alerta cantidad mínima"/>
+                    <p:spinner id="prodAlertaCantidad" value="#{productoBean.producto.prodAlertaCantidad}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <h:outputLabel />
+                    <h:outputLabel />
+                    <p:outputLabel value="Categoría"/>
+                    <p:selectOneMenu id="catIdcategoria" value="#{productoBean.producto.categoria.catIdcategoria}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione categoría" />
+                        <f:selectItems value="#{productoBean.getCategorias()}" />
+                    </p:selectOneMenu>
+                    <h:link outcome="categorias" value="Agergar Nueva Categoría" />
+                    <h:outputLabel />
+                    <h:outputLabel />
+                    <h:outputLabel />
+                    <p:outputLabel value="Unidad de medida"/>
+                    <p:selectOneMenu id="unmIdunidadmedida" value="#{productoBean.producto.unidadMedida.unmIdunidadmedida}"
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione unidad de medida" />
+                        <f:selectItems value="#{productoBean.getUnidadesMedida()}" />
+                    </p:selectOneMenu>
+                    <h:link outcome="unidadesMedida" value="Agergar Nueva Unidad de Medida" />
+                    <h:outputLabel />
+                </h:panelGrid>
+                <p:commandButton value="Modificar" update=":formMostrar"
+                    actionListener="#{productoBean.modificar()}"
+                    oncomplete="PF('dlgmodificar').hide();"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dlg2" header="Eliminar ..."
+            showEffect="explode" hideEffect="explode"
+            widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+                <h:outputText value="¿Desea eliminar este registro?"/>
+                <p:commandButton value="Si" actionListener="{Bean.eliminar()}"
+                    update=":formMostrar" oncomplete="PF('dlgeliminar').hide();"/>
+                <p:commandButton value="No" onclick="PF('dlgeliminar').hide()"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

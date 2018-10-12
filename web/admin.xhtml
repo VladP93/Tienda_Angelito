@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Panel de control</title>
+    </h:head>
+    <h:body>
+        <h1 style="text-align: center;">Tienda Angelito</h1>
+        <!--
+        <div>
+        <h:link outcome="categorias" value="Categorías" /><br />
+        <h:link outcome="clientes" value="Clientes" /> <br />
+        <h:link outcome="proveedores" value="Proveedores" /> <br />
+        <h:link outcome="tiposUsuario" value="Tipos de usuario" /> <br />
+        <h:link outcome="usuarios" value="Usuarios" /> <br />
+        <h:link outcome="unidadesMedida" value="Unidades de medida" /> <br />
+        <h:link outcome="compras" value="Compras" /> <br />
+        <h:link outcome="productos" value="Productos" /> <br />
+        <h:link outcome="lotes" value="Lotes" /> <br />
+        <h:link outcome="factura" value="Facturas" /> <br />
+        </div>
+        -->
+        <div class="ui-g">
+            <div class="ui-g-1"></div>
+            <div class="ui-g-2">
+                <!--
+                <p:panel id="basic" toggleable="true" header="Categorías de producto">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Mantenimiento de caetgorías para producto, se permite listar, agregar o modificar las categorías de los productos." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+                -->
+            </div>
+            <div class="ui-g-2">
+                <p:panel id="basic" toggleable="true" header="Gestion de clientes">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Mantenimiento de clientes, se permite listar, agregar o modificar los clientes registrados." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+            </div>
+            <div class="ui-g-2">
+                <p:panel id="basic" toggleable="true" header="Gestion proveedores">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Mantenimiento de proveedores, se permite listar, agregar o modificar los proveedores registrados." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+            </div>
+            <!--
+            <div class="ui-g-2">
+                <p:panel id="basic" toggleable="true" header="Tipos de usuario">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Mantenimiento de roles para los usuarios del sistema, se permite listar, agregar o modificar los roles de cada usuario." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+            </div>
+            -->
+            <div class="ui-g-2">
+                
+                <p:panel id="basic" toggleable="true" header="Gestion de usuarios">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Mantenimiento de los usuarios del sistema, se permite listar, agregar o modificar los empleados como un usuario." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+            </div>
+            <div class="ui-g-1"></div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1"></div>
+            <div class="ui-g-2">
+                <!--
+                <p:panel id="basic" toggleable="true" header="Unidades de medida para productos">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Mantenimiento de unidades de medida para los producto, se permite listar, agregar o modificar las unidades de medida de los productos." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+                -->
+            </div>
+            <div class="ui-g-2">
+                <p:panel id="basic" toggleable="true" header="Compras">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Registra y lista las compras registradas" />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+            </div>
+            <div class="ui-g-2">
+                <p:panel id="basic" toggleable="true" header="Productos">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Registro y listado de productos dentro del inventario muestra descipcion de estos así como sus existencias." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+            </div>
+            <!--
+            <div class="ui-g-2">
+                <p:panel id="basic" toggleable="true" header="Lotes">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Registro y listadod de lotes, verificando sus productos y fechas de vencimiento." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+            </div>
+            -->
+            <div class="ui-g-2">
+                <p:panel id="basic" toggleable="true" header="Facturación">
+                    <h:link outcome="categorias">
+                    <h:panelGrid columns="1" style="text-align: center;">
+                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <h:outputText value="Crea y lista las facturas o registro de ventas del negocio." />
+                    </h:panelGrid>
+                    </h:link>
+                </p:panel>
+            </div>
+            <div class="ui-g-1"></div>
+        </div>
+    </h:body>
+</html>
+
+

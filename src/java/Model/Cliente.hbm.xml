@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-23-2018 06:43:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Cliente" table="CLIENTE" schema="DB_TIENDAANGELITO" optimistic-lock="version">
+        <id name="cliDui" type="string">
+            <column name="CLI_DUI" length="9" />
+            <generator class="assigned" />
+        </id>
+        <property name="cliNit" type="string">
+            <column name="CLI_NIT" length="14" not-null="true" unique="true" />
+        </property>
+        <property name="cliNombre" type="string">
+            <column name="CLI_NOMBRE" length="50" not-null="true" />
+        </property>
+        <property name="cliApellido" type="string">
+            <column name="CLI_APELLIDO" length="50" not-null="true" />
+        </property>
+        <property name="cliDireccion" type="string">
+            <column name="CLI_DIRECCION" not-null="true" />
+        </property>
+        <property name="cliTelefono" type="string">
+            <column name="CLI_TELEFONO" length="8" not-null="true" />
+        </property>
+        <property name="cliEmail" type="string">
+            <column name="CLI_EMAIL" length="50" />
+        </property>
+        <property name="cliJuridica" type="java.lang.Character">
+            <column name="CLI_JURIDICA" length="1" />
+        </property>
+        <set name="facturas" table="FACTURA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="FACT_CLIENTE_DUI" length="9" />
+            </key>
+            <one-to-many class="Model.Factura" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-23-2018 06:43:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Comprobante" table="COMPROBANTE" schema="DB_TIENDAANGELITO" optimistic-lock="version">
+        <id name="comprobIdcomprobante" type="big_decimal">
+            <column name="COMPROB_IDCOMPROBANTE" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="compra" class="Model.Compra" fetch="select">
+            <column name="COMPROB_IDCOMPRA" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="comprobNombre" type="string">
+            <column name="COMPROB_NOMBRE" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

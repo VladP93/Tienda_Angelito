@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-23-2018 06:43:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Lote" table="LOTE" schema="DB_TIENDAANGELITO" optimistic-lock="version">
+        <id name="lotIdlote" type="big_decimal">
+            <column name="LOT_IDLOTE" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="producto" class="Model.Producto" fetch="select">
+            <column name="LOT_CODPRODUCTO" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="lotNumero" type="string">
+            <column name="LOT_NUMERO" length="50" not-null="true" />
+        </property>
+        <property name="lotFechacaducidad" type="date">
+            <column name="LOT_FECHACADUCIDAD" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

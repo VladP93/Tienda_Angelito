@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gestion de ...</title>
+    </h:head>
+    <h:body>
+        <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
+        <p:panel id="panel" header="Nueva factura" style="margin-bottom:10px;">
+            <h:form id="formInsertar">
+                <h:panelGrid columns="6">
+                    <p:outputLabel value="Usuario"/>
+                    <p:selectOneMenu id="usuDui" value="#{facturaBean.factura.usuario.usuDui}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione usuario" />
+                        <f:selectItems value="#{facturaBean.getUsuarios()}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Cliente"/>
+                    <p:selectOneMenu id="cliDui" value="#{facturaBean.factura.cliente.cliDui}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione cliente" />
+                        <f:selectItems value="#{facturaBean.getClientes()}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Fecha"/>
+                    <p:inputText id="getDate" value="#{facturaBean.getDate()}" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" disabled="true"/>
+                </h:panelGrid>
+                <p:commandButton actionListener="#{facturaBean.insertar()}" value="Registrar factura"
+                    icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel2" header="Listado de facturas" style="margin-bottom:10px;">
+            <h:form id="formMostrar">
+                <p:dataTable var="fact" value="#{facturaBean.facturas}"
+                    emptyMessage="No hay ... en la base de datos"
+                    paginator="true" rows="10" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                    {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10">
+                        <p:column headerText="Id Factura">
+                            <h:outputText value="#{fact.factIdfactura}"/>
+                        </p:column>
+                        <p:column headerText="Usuario">
+                            <h:outputText value="#{fact.usuario.usuNombre}"/>
+                        </p:column>
+                        <p:column headerText="Nombre Cliente">
+                            <h:outputText value="#{fact.cliente.cliNombre}"/>
+                        </p:column>
+                    <p:column headerText="Apellido Cliente">
+                            <h:outputText value="#{fact.cliente.cliApellido}"/>
+                        </p:column>
+                    <p:column headerText="Dui Cliente">
+                            <h:outputText value="#{fact.cliente.cliDui}"/>
+                        </p:column>
+                        <p:column headerText="Total">
+                            <h:outputText value="pendiente"/>
+                        </p:column>
+                        <p:column headerText="Fecha">
+                            <h:outputText value="#{fact.factFecha}"/>
+                        </p:column>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="#{facturaBean.factura}" value="#{fact}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgeliminar').show();">
+                                <f:setPropertyActionListener target="#{facturaBean.factura}" value="#{fact}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel3" header="Nuevo detalle de factura" style="margin-bottom:10px;">
+            <h:form id="formInsertar2">
+                <h:panelGrid columns="6">
+                    <p:outputLabel value="Factura No"/>
+                    <p:selectOneMenu id="factIdfactura" value="#{detalleFacturaBean.detalleFactura.factura.factIdfactura}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione factura" />
+                        <f:selectItems value="#{detalleFacturaBean.getFacturas()}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Producto"/>
+                    <p:selectOneMenu id="prodCodproducto" value="#{detalleFacturaBean.detalleFactura.producto.prodCodproducto}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione producto" />
+                        <f:selectItems value="#{detalleFacturaBean.getProductos()}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Cantidad"/>
+                    <p:spinner id="dFactCantidad" value="#{detalleFacturaBean.detalleFactura.detfCantidad}" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" />
+                </h:panelGrid>
+                <p:commandButton actionListener="#{detalleFacturaBean.insertar()}" value="Ingresar detalle"
+                    icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel4" header="Detalles de facturas" style="margin-bottom:10px;">
+            <h:form id="formMostrar2">
+                <p:dataTable var="dfact" value="#{detalleFacturaBean.detallesFactura}"
+                    emptyMessage="No hay ... en la base de datos"
+                    paginator="true" rows="10" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                    {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10">
+                        <p:column headerText="Id Factura">
+                            <h:outputText value="#{dfact.factura.factIdfactura}"/>
+                        </p:column>
+                        <p:column headerText="Producto">
+                            <h:outputText value="#{dfact.producto.prodNombre}"/>
+                        </p:column>
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{dfact.detfCantidad}"/>
+                        </p:column>
+                        <p:column headerText="Precio unitario">
+                            <h:outputText value="#{dfact.producto.prodPrecioUnitario}" >
+                                <f:convertNumber pattern="$ #0.00" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Subtotal">
+                            <h:outputText value="#/{detalleFacturaBean.getSubtotal()}"/> 
+                        </p:column>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="{Bean.objeto}" value="{abrev}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgeliminar').show();">
+                                <f:setPropertyActionListener target="{Bean.objeto}" value="#{abrev}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog id="dlg" header="Modificar unidad de medida" showEffect="fade" hideEffect="fade"
+            widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="250">
+            <h:form id="formModificar">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Unidad de medida"/>
+                    <p:inputText id="idCampo" value="{Bean.objeto.idCampo}" required="true"
+                        requiredMessage="Ingrese ..."/>
+                </p:panelGrid>
+                <p:commandButton value="Modificar" update=":formMostrar"
+                    actionListener="{Bean.modificar()}"
+                    oncomplete="PF('dlgmodificar').hide();"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dlg2" header="Eliminar ..."
+            showEffect="explode" hideEffect="explode"
+            widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+                <h:outputText value="¿Desea eliminar este registro?"/>
+                <p:commandButton value="Si" actionListener="{Bean.eliminar()}"
+                    update=":formMostrar" oncomplete="PF('dlgeliminar').hide();"/>
+                <p:commandButton value="No" onclick="PF('dlgeliminar').hide()"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

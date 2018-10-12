@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gestion de unidades de medida para Productos</title>
+    </h:head>
+    <h:body>
+        <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
+        <p:panel id="panel" header="Nueva unidad de medida" style="margin-bottom:10px;">
+            <h:form id="formInsertar">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Unidad de medida"/>
+                    <p:inputText id="unmUnidad" value="#{unidadMedidaBean.unidadMedida.unmUnidad}" autocomplete="off"
+                        required="true" requiredMessage="La unidad de medida es obligatoria"/>
+                </h:panelGrid>
+                <p:commandButton actionListener="#{unidadMedidaBean.insertar()}" value="Ingresar unidad de medida"
+                    icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+            </h:form>
+        </p:panel>
+        <p:panel id="panel2" header="Listado de unidades de medida" style="margin-bottom:10px;">
+            <h:form id="formMostrar">
+                <p:dataTable var="unm" value="#{unidadMedidaBean.unidadesMedida}"
+                    emptyMessage="No hay unidades de medida en la base de datos"
+                    paginator="true" rows="10" paginatorPosition="top"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                    {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="10">
+                        <p:column headerText="No Unidad">
+                            <h:outputText value="#{unm.unmIdunidadmedida}"/>
+                        </p:column>
+                        <p:column headerText="Unidad de medida">
+                            <h:outputText value="#{unm.unmUnidad}"/>
+                        </p:column>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="#{unidadMedidaBean.unidadMedida}" value="#{unm}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgeliminar').show();">
+                                <f:setPropertyActionListener target="#{unidadMedidaBean.unidadMedida}" value="#{unm}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog id="dlg" header="Modificar unidad de medida" showEffect="fade" hideEffect="fade"
+            widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="250">
+            <h:form id="formModificar">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Unidad de medida"/>
+                    <p:inputText id="unmUnidad" value="#{unidadMedidaBean.unidadMedida.unmUnidad}" required="true"
+                        requiredMessage="Ingrese la unidad de medida"/>
+                </p:panelGrid>
+                <p:commandButton value="Modificar" update=":formMostrar"
+                    actionListener="#{unidadMedidaBean.modificar()}"
+                    oncomplete="PF('dlgmodificar').hide();"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dlg2" header="Eliminar unidad de medida"
+            showEffect="explode" hideEffect="explode"
+            widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+                <h:outputText value="¿Desea eliminar este registro?"/>
+                <p:commandButton value="Si" actionListener="#{unidadMedidaBean.eliminar()}"
+                    update=":formMostrar" oncomplete="PF('dlgeliminar').hide();"/>
+                <p:commandButton value="No" onclick="PF('dlgeliminar').hide()"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
