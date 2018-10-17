@@ -15,6 +15,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
  *
  * @author vpaniagua
@@ -88,15 +93,17 @@ public class DetalleFacturaImplement implements DetalleFacturaDAO{
         System.out.println("producto: "+detalleFactura.getProducto().getProdCodproducto());
         System.out.println("id detalle: "+detalleFactura.getDetfIddetallefactura());
         System.out.println("id factura: "+detalleFactura.getFactura().getFactIdfactura());
+        
         int cantidadProducto = detalleFactura.getDetfCantidad().intValue();
         BigDecimal codigoProducto = detalleFactura.getProducto().getProdCodproducto();
         BigDecimal idDetalle = detalleFactura.getDetfIddetallefactura();
         BigDecimal numFactura = detalleFactura.getFactura().getFactIdfactura();
-                
+        
+        Connection cn= null;
+              
         try{
-            session=HibernateUtil.getSessionFactory().openSession();
             /*Query query = session.createSQLQuery(
-                    "CALL ventas123("+detalleFactura.getDetfCantidad()
+                    "EXEC ventas123("+detalleFactura.getDetfCantidad()
                             +","+detalleFactura.getProducto().getProdCodproducto()
                             +","+detalleFactura.getDetfIddetallefactura()
                             +","+detalleFactura.getFactura().getFactIdfactura()
@@ -104,19 +111,31 @@ public class DetalleFacturaImplement implements DetalleFacturaDAO{
             */
             //Query query = sessionFactory.getCurrentSession().createSQLQuery( "CALL SlaGrid(:appID, :fromYear, :toYear, :fromMon, :toMon)") .setParameter("appID", 245) .setParameter("fromYear", 2012) .setParameter("toYear", 2013) .setParameter("fromMon", 1) .setParameter("toMon", 12); 
             
-            Query query = session.createSQLQuery("exec ventas(:cantidadProducto, :codigoProducto, :idDetalle, :numFactura)")
+            /*Query query = session.createSQLQuery("exec ventas(:cantidadProducto, :codigoProducto, :idDetalle, :numFactura)")
                     .setParameter("cantidadProducto", cantidadProducto)
                     .setParameter("codigoProducto", codigoProducto)
                     .setParameter("idDetalle", idDetalle)
                     .setParameter("numFactura", numFactura);
-            
+            */
             //(:cantidadProducto, :codigoProducto, :idDetalle, :numFactura)
             
-        }catch(HibernateException e){
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","DB_TIENDAANGELITO", "1234");
+            CallableStatement cst = cn.prepareCall("{CALL ventas (?,?,?,?)}");
+            
+            cst.setInt(1, cantidadProducto);
+            cst.setBigDecimal(2, codigoProducto);
+            cst.setBigDecimal(3, idDetalle);
+            cst.setBigDecimal(4, numFactura);
+            
+            cst.execute();
+        }catch(SQLException e){
             System.out.println(e.getMessage());
         }finally{
-            if(session!=null){
-                session.close();
+            try{
+                cn.close();
+            } catch (SQLException e2){
+                System.out.println(e2.getMessage());
             }
         }
     }

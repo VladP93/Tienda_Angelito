@@ -109,7 +109,4 @@ Contributor(s):
           <set exclude="true" />
       </foreign-key>
   </table>
-  <sql-query name="ventas" callable="true">
-      {call ventas (:cantidadProducto, :codigoProducto, :idDetalle, :numFactura)}
-  </sql-query>
 </hibernate-reverse-engineering>

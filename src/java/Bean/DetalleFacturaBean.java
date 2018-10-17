@@ -110,6 +110,7 @@ public class DetalleFacturaBean {
     
     public void insertar() {
         idValue();
+        
         DetalleFacturaDAO accesoDetalleFactura = new DetalleFacturaImplement();
         accesoDetalleFactura.insertarDetalleFactura(detalleFactura);
         detalleFactura = new DetalleFactura();
