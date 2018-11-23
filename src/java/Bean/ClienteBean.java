@@ -8,9 +8,11 @@ package Bean;
 import DAO.ClienteDAO;
 import DAO.ClienteImplement;
 import Model.Cliente;
+import java.io.IOException;
 import java.util.List;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -25,8 +27,14 @@ public class ClienteBean {
     /**
      * Creates a new instance of ClienteBean
      */
-    public ClienteBean() {
+    public ClienteBean() throws IOException {
+        if(UsuarioLoggeado.tipoUsuario == -1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }else if(UsuarioLoggeado.tipoUsuario!=1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/factura.xhtml");
+        }else{
         cliente = new Cliente();
+        }
     }
 
     public Cliente getCliente() {

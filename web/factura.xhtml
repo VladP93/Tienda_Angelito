@@ -5,31 +5,36 @@ xmlns:h="http://xmlns.jcp.org/jsf/html"
 xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Gestion de ...</title>
+        <title>Gestion de ventas</title>
     </h:head>
     <h:body>
         <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
         <p:panel id="panel" header="Nueva factura" style="margin-bottom:10px;">
             <h:form id="formInsertar">
-                <h:panelGrid columns="6">
+                <h:panelGrid columns="3">
                     <p:outputLabel value="Usuario"/>
                     <p:selectOneMenu id="usuDui" value="#{facturaBean.factura.usuario.usuDui}" 
                         required="true" requiredMessage="El/La ... es obligatoria">
                         <f:selectItem itemLabel="Seleccione usuario" />
                         <f:selectItems value="#{facturaBean.getUsuarios()}" />
                     </p:selectOneMenu>
+                    <h:link outcome="usuarios" value="Agregar nuevo usuario" />
                     <p:outputLabel value="Cliente"/>
                     <p:selectOneMenu id="cliDui" value="#{facturaBean.factura.cliente.cliDui}" 
                         required="true" requiredMessage="El/La ... es obligatoria">
                         <f:selectItem itemLabel="Seleccione cliente" />
                         <f:selectItems value="#{facturaBean.getClientes()}" />
                     </p:selectOneMenu>
+                    <h:link outcome="clientes" value="Agergar nuevo cliente" />
                     <p:outputLabel value="Fecha"/>
                     <p:inputText id="getDate" value="#{facturaBean.getDate()}" autocomplete="off"
                                  required="true" requiredMessage="El/La ... es obligatoria" disabled="true"/>
                 </h:panelGrid>
                 <p:commandButton actionListener="#{facturaBean.insertar()}" value="Registrar factura"
                     icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+                <hr></hr>
+                <h:link outcome="admin" value="Pantalla principal" /> <br/>
+                <h:link outcome="index" value="Cerrar Sesión" />
             </h:form>
         </p:panel>
         <p:panel id="panel2" header="Listado de facturas" style="margin-bottom:10px;">
@@ -56,10 +61,17 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                             <h:outputText value="#{fact.cliente.cliDui}"/>
                         </p:column>
                         <p:column headerText="Total">
-                            <h:outputText value="pendiente"/>
+                            <h:outputText value="#{detalleFacturaBean.getTotal(fact)}">
+                                <f:convertNumber pattern="$ #0.00" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Fecha">
                             <h:outputText value="#{fact.factFecha}"/>
+                        </p:column>
+                        <p:column headerText="Ver detalles" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-info" oncomplete="PF('dlgdetalles').show();" update=":formDetalles :formMostrar2">
+                                <f:setPropertyActionListener target="#{facturaBean.factura}" value="#{fact}"/>
+                            </p:commandButton>
                         </p:column>
                         <p:column headerText="Modificar" style="text-align: center;">
                             <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
@@ -74,15 +86,17 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                     </p:dataTable>
             </h:form>
         </p:panel>
-        <p:panel id="panel3" header="Nuevo detalle de factura" style="margin-bottom:10px;">
-            <h:form id="formInsertar2">
+        
+        <p:dialog id="dlg1" header="Detalle de factura" showEffect="fade" hideEffect="fade"
+            widgetVar="dlgdetalles" modal="true" resizable="false" minWidth="250">
+            <p:panel id="panel3" header="Nuevo detalle de factura" style="margin-bottom:10px;">
+            <h:form id="formDetalles">
                 <h:panelGrid columns="6">
-                    <p:outputLabel value="Factura No"/>
-                    <p:selectOneMenu id="factIdfactura" value="#{detalleFacturaBean.detalleFactura.factura.factIdfactura}" 
-                        required="true" requiredMessage="El/La ... es obligatoria">
-                        <f:selectItem itemLabel="Seleccione factura" />
-                        <f:selectItems value="#{detalleFacturaBean.getFacturas()}" />
-                    </p:selectOneMenu>
+                    <p:outputLabel value="Factura No:"/>
+                    <p:outputLabel value="#{facturaBean.factura.factIdfactura}"/>
+                    <p:outputLabel value="Factura No:"/>
+                    <p:inputText id="factIdfactura" value="#{detalleFacturaBean.detalleFactura.factura.factIdfactura}" autocomplete="off"
+                                 required="true" requiredMessage="Alerta: {Bean.prod.prodNombre} cerca de caducar"/>
                     <p:outputLabel value="Producto"/>
                     <p:selectOneMenu id="prodCodproducto" value="#{detalleFacturaBean.detalleFactura.producto.prodCodproducto}" 
                         required="true" requiredMessage="El/La ... es obligatoria">
@@ -94,12 +108,13 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                                  required="true" requiredMessage="El/La ... es obligatoria" />
                 </h:panelGrid>
                 <p:commandButton actionListener="#{detalleFacturaBean.insertar()}" value="Ingresar detalle"
-                    icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+                    icon="ui-icon-disk" update=":formMostrar2 :formDetalles mensajes "/>
             </h:form>
         </p:panel>
+        
         <p:panel id="panel4" header="Detalles de facturas" style="margin-bottom:10px;">
             <h:form id="formMostrar2">
-                <p:dataTable var="dfact" value="#{detalleFacturaBean.detallesFactura}"
+                <p:dataTable var="dfact" value="#{detalleFacturaBean.getDetallesFactura(facturaBean.factura)}"
                     emptyMessage="No hay ... en la base de datos"
                     paginator="true" rows="10" paginatorPosition="top"
                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
@@ -120,7 +135,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Subtotal">
-                            <h:outputText value="#/{detalleFacturaBean.getSubtotal()}"/> 
+                            <h:outputText value="#{dfact.detfCantidad*dfact.producto.prodPrecioUnitario}" >
+                                <f:convertNumber pattern="$ #0.00" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Modificar" style="text-align: center;">
                             <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
@@ -133,22 +150,47 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
+                <p:separator />
+                <div align="right">
+                    <p:commandButton value="Cerrar" onclick="PF('dlgDetalles').hide()" />
+                </div>
             </h:form>
         </p:panel>
-        <p:dialog id="dlg" header="Modificar unidad de medida" showEffect="fade" hideEffect="fade"
+        </p:dialog>
+        
+        
+        
+        <p:dialog id="dlg2" header="Modificar" showEffect="fade" hideEffect="fade"
             widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="250">
             <h:form id="formModificar">
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Unidad de medida"/>
-                    <p:inputText id="idCampo" value="{Bean.objeto.idCampo}" required="true"
-                        requiredMessage="Ingrese ..."/>
-                </p:panelGrid>
+                <h:panelGrid columns="3">
+                    <p:outputLabel value="Factura No:"/>
+                    <p:inputText id="factIdfacturamod" value="#{facturaBean.factura.factIdfactura}" autocomplete="off"
+                                 required="true" requiredMessage="Alerta: {Bean.prod.prodNombre} cerca de caducar" disabled="true"/>
+                    <p:outputLabel value="Usuario"/>
+                    <p:selectOneMenu id="usuDui" value="#{facturaBean.factura.usuario.usuDui}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione usuario" />
+                        <f:selectItems value="#{facturaBean.getUsuarios()}" />
+                    </p:selectOneMenu>
+                    <h:link outcome="usuarios" value="Agregar nuevo usuario" />
+                    <p:outputLabel value="Cliente"/>
+                    <p:selectOneMenu id="cliDui" value="#{facturaBean.factura.cliente.cliDui}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione cliente" />
+                        <f:selectItems value="#{facturaBean.getClientes()}" />
+                    </p:selectOneMenu>
+                    <h:link outcome="clientes" value="Agergar nuevo cliente" />
+                    <p:outputLabel value="Fecha"/>
+                    <p:inputText id="getDate" value="#{facturaBean.factura.factFecha}" autocomplete="off"
+                                 required="true" requiredMessage="El/La ... es obligatoria" disabled="true"/>
+                </h:panelGrid>
                 <p:commandButton value="Modificar" update=":formMostrar"
                     actionListener="{Bean.modificar()}"
-                    oncomplete="PF('dlgmodificar').hide();"/>
+                    oncomplete="PF('dlgeliminar').show();"/>
             </h:form>
         </p:dialog>
-        <p:dialog id="dlg2" header="Eliminar ..."
+        <p:dialog id="dlg3" header="Eliminar ..."
             showEffect="explode" hideEffect="explode"
             widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
             <h:form id="formEliminar">

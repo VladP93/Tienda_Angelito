@@ -8,9 +8,11 @@ package Bean;
 import DAO.ProveedorDAO;
 import DAO.ProveedorImplement;
 import Model.Proveedor;
+import java.io.IOException;
 import java.util.List;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -25,8 +27,14 @@ public class ProveedorBean {
     /**
      * Creates a new instance of ProveedorBean
      */
-    public ProveedorBean() {
+    public ProveedorBean() throws IOException {
+        if(UsuarioLoggeado.tipoUsuario == -1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }else if(UsuarioLoggeado.tipoUsuario!=1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/factura.xhtml");
+        }else{
         proveedor = new Proveedor();
+        }
     }
 
     public Proveedor getProveedor() {

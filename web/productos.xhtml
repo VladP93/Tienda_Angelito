@@ -59,6 +59,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 </h:panelGrid>
                 <p:commandButton actionListener="#{productoBean.insertar()}" value="Ingresar producto"
                     icon="ui-icon-disk" update=":formInsertar :mensajes :formMostrar"/>
+                <hr></hr>
+                <h:link outcome="admin" value="Pantalla principal" /> <br/>
             </h:form>
         </p:panel>
         <p:panel id="panel2" header="Listado de productos" style="margin-bottom:10px;">
@@ -84,9 +86,19 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                     <p:column headerText="Descripción" filterBy="#{prod.prodDescripcion}" filterStyle="display:none">
                             <h:outputText value="#{prod.prodDescripcion}"/>
                         </p:column>
-                        <p:column headerText="categoría">
+                    <!--<p:column headerText="categoría" filterBy="#{prod.categoria.catIdcategoria}" filterMatchMode="exact">
+                        <f:facet name="filter">
+                <p:selectOneMenu id="catIdcategoria" onchange="PF('productosTable').filter()"  value="#{productoBean.producto.categoria.catIdcategoria}" 
+                        required="true" requiredMessage="El/La ... es obligatoria">
+                        <f:selectItem itemLabel="Seleccione categoría" />
+                        <f:selectItems value="#{productoBean.getCategorias()}" />
+                    </p:selectOneMenu>
+            </f:facet>
                             <h:outputText value="#{prod.categoria.catNombre}"/>
-                        </p:column>
+                        </p:column>-->
+                    <p:column headerText="categoría">
+                        <h:outputText value="#{prod.categoria.catNombre}"/>
+                    </p:column>
                         <p:column headerText="Precio unitario">
                             <h:outputText value="#{prod.prodPrecioUnitario}">
                                 <f:convertNumber pattern="$ #0.00" />

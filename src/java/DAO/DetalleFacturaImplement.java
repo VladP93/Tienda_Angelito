@@ -46,6 +46,25 @@ public class DetalleFacturaImplement implements DetalleFacturaDAO{
         
         return listaDetallesFactura;
     }
+    
+    @Override
+    public List<DetalleFactura> mostrarDetallesFactura(Factura factura) {
+        List<DetalleFactura> listaDetallesFactura=null;
+        
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM DetalleFactura dfactura INNER JOIN FETCH dfactura.producto producto INNER JOIN FETCH dfactura.factura factura where factura.factIdfactura ='"+factura.getFactIdfactura()+"'");
+            listaDetallesFactura = (List<DetalleFactura>) query.list();
+        }catch(HibernateException e){
+            System.out.println(e.getMessage());
+        }finally{
+            if(session != null){
+                session.close();
+            }
+        }
+        
+        return listaDetallesFactura;
+    }
 
     @Override
     public List<Producto> mostrarProductos() {

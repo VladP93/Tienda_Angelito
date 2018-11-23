@@ -18,6 +18,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 </h:panelGrid>
                 <p:commandButton actionListener="#{unidadMedidaBean.insertar()}" value="Ingresar unidad de medida"
                     icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+                <hr></hr>
+                <h:link outcome="productos" value="Regresar" /> <br/>
             </h:form>
         </p:panel>
         <p:panel id="panel2" header="Listado de unidades de medida" style="margin-bottom:10px;">

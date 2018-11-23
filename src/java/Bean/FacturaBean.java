@@ -10,6 +10,7 @@ import DAO.FacturaImplement;
 import Model.Cliente;
 import Model.Factura;
 import Model.Usuario;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -36,8 +38,12 @@ public class FacturaBean {
     /**
      * Creates a new instance of FacturaBean
      */
-    public FacturaBean() {
+    public FacturaBean()  throws IOException {
+        if(UsuarioLoggeado.tipoUsuario == -1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }else{
         factura = new Factura();
+        }
     }
 
     public Cliente getCliente() {

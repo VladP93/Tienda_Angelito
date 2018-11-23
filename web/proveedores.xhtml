@@ -37,6 +37,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 </h:panelGrid>
                 <p:commandButton actionListener="#{proveedorBean.insertar()}" value="Ingresar proveedor"
                     icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+                <hr></hr>
+                <h:link outcome="admin" value="Pantalla principal" /> <br/>
             </h:form>
         </p:panel>
         <p:panel id="panel2" header="Listado de proveedores" style="margin-bottom:10px;">

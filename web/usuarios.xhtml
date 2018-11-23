@@ -51,6 +51,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 <br />
                 <p:commandButton actionListener="#{usuarioBean.insertar()}" value="Ingresar usuario"
                     icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+                <hr></hr>
+                <h:link outcome="admin" value="Pantalla principal" /> <br/>
             </h:form>
         </p:panel>
         <p:panel id="panel2" header="Listado de usuarios" style="margin-bottom:10px;">
@@ -88,9 +90,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                         <p:column headerText="Alias">
                             <h:outputText value="#{usu.usuAlias}"/>
                         </p:column>
+                    <!--
                         <p:column headerText="Contraseña">
-                            <h:outputText value="#{usu.usuContrasena}"/>
+                            <h:outputText value="Pa que quieres saber eso?"/>
                         </p:column>
+                    -->
                         <p:column headerText="Modificar" style="text-align: center;">
                             <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
                                 <f:setPropertyActionListener target="{Bean.objeto}" value="#{usu}"/>

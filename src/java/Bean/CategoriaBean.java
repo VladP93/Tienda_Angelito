@@ -8,10 +8,12 @@ package Bean;
 import DAO.CategoriaDAO;
 import DAO.CategoriaImplement;
 import Model.Categoria;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -26,8 +28,14 @@ public class CategoriaBean {
     /**
      * Creates a new instance of CategoriaBean
      */
-    public CategoriaBean() {
+    public CategoriaBean() throws IOException {
+        if(UsuarioLoggeado.tipoUsuario == -1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }else if(UsuarioLoggeado.tipoUsuario!=1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/factura.xhtml");
+        }else{
         categoria = new Categoria();
+        }
     }
 
     public Categoria getCategoria() {

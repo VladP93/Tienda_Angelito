@@ -8,10 +8,12 @@ package Bean;
 import DAO.UnidadMedidaDAO;
 import DAO.UnidadMedidaImplement;
 import Model.UnidadMedida;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -26,8 +28,14 @@ public class UnidadMedidaBean {
     /**
      * Creates a new instance of UnidadMedidaBean
      */
-    public UnidadMedidaBean() {
+    public UnidadMedidaBean() throws IOException {
+        if(UsuarioLoggeado.tipoUsuario == -1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }else if(UsuarioLoggeado.tipoUsuario!=1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/factura.xhtml");
+        }else{
         unidadMedida = new UnidadMedida();
+        }
     }
 
     public UnidadMedida getUnidadMedida() {

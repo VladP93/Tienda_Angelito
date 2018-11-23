@@ -10,12 +10,13 @@ import DAO.ProductoImplement;
 import Model.Producto;
 import Model.UnidadMedida;
 import Model.Categoria;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import javax.faces.model.SelectItem;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -35,8 +36,14 @@ public class ProductoBean {
     /**
      * Creates a new instance of ProductoBean
      */
-    public ProductoBean() {
+    public ProductoBean() throws IOException {
+        if(UsuarioLoggeado.tipoUsuario == -1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }else if(UsuarioLoggeado.tipoUsuario!=1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/factura.xhtml");
+        }else{
         producto=new Producto();
+        }
     }
 
     public Producto getProducto() {

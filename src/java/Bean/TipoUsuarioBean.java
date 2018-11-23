@@ -8,10 +8,12 @@ package Bean;
 import DAO.TipoUsuarioDAO;
 import DAO.TipoUsuarioImplement;
 import Model.TipoUsuario;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -26,8 +28,14 @@ public class TipoUsuarioBean {
     /**
      * Creates a new instance of TipoUsuarioBean
      */
-    public TipoUsuarioBean() {
+    public TipoUsuarioBean() throws IOException {
+        if(UsuarioLoggeado.tipoUsuario == -1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }else if(UsuarioLoggeado.tipoUsuario!=1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/factura.xhtml");
+        }else{
         tipoUsuario = new TipoUsuario();
+        }
     }
 
     public TipoUsuario getTipoUsuario() {

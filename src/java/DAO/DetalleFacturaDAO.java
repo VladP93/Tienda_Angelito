@@ -16,6 +16,7 @@ import java.util.List;
  */
 public interface DetalleFacturaDAO {
     public List<DetalleFactura> mostrarDetallesFactura();
+    public List<DetalleFactura> mostrarDetallesFactura(Factura factura);
     public List<Producto> mostrarProductos();
     public List<Factura> mostrarFacturas();
     public void insertarDetalleFactura(DetalleFactura detalleFactura);

@@ -67,6 +67,12 @@ public class DetalleFacturaBean {
         detallesFactura = accesoDetallesFactura.mostrarDetallesFactura();
         return detallesFactura;
     }
+    
+    public List<DetalleFactura> getDetallesFactura(Factura factura){
+        DetalleFacturaDAO accesoDetallesFactura =  new DetalleFacturaImplement();
+        detallesFactura = accesoDetallesFactura.mostrarDetallesFactura(factura);
+        return detallesFactura;
+    }
 
     public void setDetallesFactura(List<DetalleFactura> detallesFactura) {
         this.detallesFactura = detallesFactura;
@@ -110,7 +116,6 @@ public class DetalleFacturaBean {
     
     public void insertar() {
         idValue();
-        
         DetalleFacturaDAO accesoDetalleFactura = new DetalleFacturaImplement();
         accesoDetalleFactura.insertarDetalleFactura(detalleFactura);
         detalleFactura = new DetalleFactura();
@@ -137,8 +142,21 @@ public class DetalleFacturaBean {
         }
     }
     
-    public double getSubtotal(){
-        return getDetalleFactura().getDetfCantidad().doubleValue() * getDetalleFactura().getProducto().getProdPrecioUnitario().doubleValue();
+    public double getTotal(Factura factura){
+        double total=0;
+        
+        DetalleFacturaDAO accesoDetallesFactura =  new DetalleFacturaImplement();
+        detallesFactura = accesoDetallesFactura.mostrarDetallesFactura(factura);
+        
+        for(DetalleFactura df:detallesFactura){
+            total = total + (df.getProducto().getProdPrecioUnitario().doubleValue()*df.getDetfCantidad().doubleValue());
+        }
+        
+        return total;
+    }
+    
+    public void getsetID(){
+        
     }
 
 }

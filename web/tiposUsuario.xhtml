@@ -18,6 +18,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 </h:panelGrid>
                 <p:commandButton actionListener="#{tipoUsuarioBean.insertar()}" value="Ingresar tipo de usuario"
                     icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+                <hr></hr>
+                <h:link outcome="usuarios" value="Regresar" /> <br/>
             </h:form>
         </p:panel>
         <p:panel id="panel2" header="Listado de tipos de usuario" style="margin-bottom:10px;">

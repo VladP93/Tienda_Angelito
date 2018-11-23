@@ -20,6 +20,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 </h:panelGrid>
                 <p:commandButton actionListener="#{categoriaBean.insertar()}" value="Ingresar categoria"
                     icon="ui-icon-disk" update=":formMostrar :formInsertar mensajes "/>
+                <hr></hr>
+                <h:link outcome="productos" value="Regresar" /> <br/>
             </h:form>
         </p:panel>
         <p:panel id="panel2" header="Listado de categorías" style="margin-bottom:10px;">

@@ -8,7 +8,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
         <title>Panel de control</title>
     </h:head>
     <h:body>
-        <h1 style="text-align: center;">Tienda Angelito</h1>
+        <p style="text-align: center;font-size: 40px;font-weight: bolder">Tienda Angelito</p>
+        <p:outputLabel value="#{usuarioBean.tipoUsuario.tusuIdtipousuario}" style="color: white;"/>
         <!--
         <div>
         <h:link outcome="categorias" value="Categorías" /><br />
@@ -38,20 +39,20 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 -->
             </div>
             <div class="ui-g-2">
-                <p:panel id="basic" toggleable="true" header="Gestion de clientes">
-                    <h:link outcome="categorias">
+                <p:panel id="panelClientes" toggleable="true" header="Gestion de clientes">
+                    <h:link outcome="clientes">
                     <h:panelGrid columns="1" style="text-align: center;">
-                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <p:graphicImage value="imgs/cliente.png" height="50" width="50" /><br />
                         <h:outputText value="Mantenimiento de clientes, se permite listar, agregar o modificar los clientes registrados." />
                     </h:panelGrid>
                     </h:link>
                 </p:panel>
             </div>
             <div class="ui-g-2">
-                <p:panel id="basic" toggleable="true" header="Gestion proveedores">
-                    <h:link outcome="categorias">
+                <p:panel id="panelProveedores" toggleable="true" header="Gestion proveedores">
+                    <h:link outcome="proveedores">
                     <h:panelGrid columns="1" style="text-align: center;">
-                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <p:graphicImage value="imgs/proveedor.png" height="50" width="50" /><br />
                         <h:outputText value="Mantenimiento de proveedores, se permite listar, agregar o modificar los proveedores registrados." />
                     </h:panelGrid>
                     </h:link>
@@ -71,10 +72,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
             -->
             <div class="ui-g-2">
                 
-                <p:panel id="basic" toggleable="true" header="Gestion de usuarios">
-                    <h:link outcome="categorias">
+                <p:panel id="panelUsuarios" toggleable="true" header="Gestion de usuarios">
+                    <h:link outcome="usuarios">
                     <h:panelGrid columns="1" style="text-align: center;">
-                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <p:graphicImage value="imgs/usuario.png" height="50" width="50" /><br />
                         <h:outputText value="Mantenimiento de los usuarios del sistema, se permite listar, agregar o modificar los empleados como un usuario." />
                     </h:panelGrid>
                     </h:link>
@@ -97,20 +98,20 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 -->
             </div>
             <div class="ui-g-2">
-                <p:panel id="basic" toggleable="true" header="Compras">
-                    <h:link outcome="categorias">
+                <p:panel id="panelCompras" toggleable="true" header="Compras">
+                    <h:link outcome="compras">
                     <h:panelGrid columns="1" style="text-align: center;">
-                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <p:graphicImage value="imgs/compra.png" height="50" width="50" /><br />
                         <h:outputText value="Registra y lista las compras registradas" />
                     </h:panelGrid>
                     </h:link>
                 </p:panel>
             </div>
             <div class="ui-g-2">
-                <p:panel id="basic" toggleable="true" header="Productos">
-                    <h:link outcome="categorias">
+                <p:panel id="panelProducto" toggleable="true" header="Productos">
+                    <h:link outcome="productos">
                     <h:panelGrid columns="1" style="text-align: center;">
-                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <p:graphicImage value="imgs/producto.png" height="50" width="50" /><br />
                         <h:outputText value="Registro y listado de productos dentro del inventario muestra descipcion de estos así como sus existencias." />
                     </h:panelGrid>
                     </h:link>
@@ -129,16 +130,23 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
             </div>
             -->
             <div class="ui-g-2">
-                <p:panel id="basic" toggleable="true" header="Facturación">
-                    <h:link outcome="categorias">
+                <p:panel id="panelVentas" toggleable="true" header="Facturación">
+                    <h:link outcome="factura">
                     <h:panelGrid columns="1" style="text-align: center;">
-                        <p:graphicImage value="imgs/icon.png" height="50" width="50" /><br />
+                        <p:graphicImage value="imgs/factura.png" height="50" width="50" /><br />
                         <h:outputText value="Crea y lista las facturas o registro de ventas del negocio." />
                     </h:panelGrid>
                     </h:link>
                 </p:panel>
             </div>
             <div class="ui-g-1"></div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-5"></div>
+            <div class="ui-g-2" align="center" style="font-size: large;">
+                 <h:link outcome="index" value="Cerrar Sesión" />
+            </div>
+            <div class="ui-g-5"></div>
         </div>
     </h:body>
 </html>

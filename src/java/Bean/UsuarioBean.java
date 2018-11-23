@@ -9,11 +9,13 @@ import DAO.UsuarioDAO;
 import DAO.UsuarioImplement;
 import Model.Usuario;
 import Model.TipoUsuario;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.model.SelectItem;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -30,8 +32,14 @@ public class UsuarioBean {
     /**
      * Creates a new instance of UsuarioBean
      */
-    public UsuarioBean() {
-        usuario = new Usuario();
+    public UsuarioBean() throws IOException {
+        if(UsuarioLoggeado.tipoUsuario == -1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        }else if(UsuarioLoggeado.tipoUsuario!=1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/factura.xhtml");
+        }else{
+            usuario = new Usuario();
+        }
     }
 
     public Usuario getUsuario() {
@@ -82,6 +90,7 @@ public class UsuarioBean {
         UsuarioDAO accesoUsuario = new UsuarioImplement();
         accesoUsuario.insertarUsuario(usuario);
         usuario = new Usuario();
+        System.out.println("usuario: "+UsuarioLoggeado.tipoUsuario);
     }
     
     public void modificar(){
@@ -95,5 +104,6 @@ public class UsuarioBean {
         accesoUsuario.eliminarUsuario(usuario);
         usuario = new Usuario();
     }
+    
     
 }
