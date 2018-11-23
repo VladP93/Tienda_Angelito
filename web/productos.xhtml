@@ -6,6 +6,7 @@ xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Gestion de productos</title>
+        <link rel="stylesheet" type="text/css" href="css/fondologin.css"/>
     </h:head>
     <h:body>
         <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
@@ -14,7 +15,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                 <h:panelGrid columns="6">
                     <p:outputLabel value="Codigo"/>
                     <p:inputText id="prodCodproducto" value="#{productoBean.producto.prodCodproducto}" autocomplete="off"
-                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                        required="true" requiredMessage="El/La ... es obligatoria" converterMessage="El código solo permite números"/>
                     <p:outputLabel value="Nombre"/>
                     <p:inputText id="prodNombre" value="#{productoBean.producto.prodNombre}" autocomplete="off"
                         required="true" requiredMessage="El/La ... es obligatoria"/>

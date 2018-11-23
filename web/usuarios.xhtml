@@ -6,6 +6,7 @@ xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Gestion de usuarios</title>
+        <link rel="stylesheet" type="text/css" href="css/fondologin.css"/>
     </h:head>
     <h:body>
         <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
@@ -13,11 +14,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
             <h:form id="formInsertar">
                 <h:panelGrid columns="6">
                     <p:outputLabel value="DUI"/>
-                    <p:inputText id="usuDui" value="#{usuarioBean.usuario.usuDui}" autocomplete="off"
-                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:inputMask id="usuDui" value="#{usuarioBean.usuario.usuDui}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria" mask="999999999"/>
                     <p:outputLabel value="NIT"/>
-                    <p:inputText id="usuNit" value="#{usuarioBean.usuario.usuNit}" autocomplete="off"
-                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:inputMask id="usuNit" value="#{usuarioBean.usuario.usuNit}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria" mask="99999999999999"/>
                     <p:outputLabel value="Nombre"/>
                     <p:inputText id="usuNombre" value="#{usuarioBean.usuario.usuNombre}" autocomplete="off"
                         required="true" requiredMessage="El/La ... es obligatoria"/>
@@ -28,8 +29,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                     <p:inputText id="usuDirección" value="#{usuarioBean.usuario.usuDireccion}" autocomplete="off"
                         required="true" requiredMessage="El/La ... es obligatoria"/>
                     <p:outputLabel value="Telefono"/>
-                    <p:inputText id="usuTelefono" value="#{usuarioBean.usuario.usuTelefono}" autocomplete="off"
-                        required="true" requiredMessage="El/La ... es obligatoria"/>
+                    <p:inputMask id="usuTelefono" value="#{usuarioBean.usuario.usuTelefono}" autocomplete="off"
+                        required="true" requiredMessage="El/La ... es obligatoria" mask="999999999"/>
                     <p:outputLabel value="E-mail"/>
                     <p:inputText id="usuEmail" value="#{usuarioBean.usuario.usuEmail}" autocomplete="off"
                         required="true" requiredMessage="El/La ... es obligatoria"/>

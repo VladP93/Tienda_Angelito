@@ -6,6 +6,7 @@ xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Gestion de Proveedores</title>
+        <link rel="stylesheet" type="text/css" href="css/fondologin.css"/>
     </h:head>
     <h:body>
         <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
@@ -13,9 +14,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
             <h:form id="formInsertar">
                 <h:panelGrid columns="6">
                     <p:outputLabel value="DUI"/>
-                    <p:inputText id="provDui" value="#{proveedorBean.proveedor.provDui}" autocomplete="off" />
+                    <p:inputMask id="provDui" value="#{proveedorBean.proveedor.provDui}" autocomplete="off" mask="999999999"/>
                     <p:outputLabel value="NIT"/>
-                    <p:inputText id="provNit" value="#{proveedorBean.proveedor.provNit}" autocomplete="off" />
+                    <p:inputMask id="provNit" value="#{proveedorBean.proveedor.provNit}" autocomplete="off" mask="99999999999999" />
                     <p:outputLabel value="Nombre"/>
                     <p:inputText id="provNombre" value="#{proveedorBean.proveedor.provNombre}" autocomplete="off"
                         required="true" requiredMessage="El nombre del proveedor es obligatorio"/>
@@ -24,7 +25,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                     <p:outputLabel value="Dirección"/>
                     <p:inputText id="provDireccion" value="#{proveedorBean.proveedor.provDireccion}" autocomplete="off" />
                     <p:outputLabel value="Teléfono"/>
-                    <p:inputText id="provTelefono" value="#{proveedorBean.proveedor.provTelefono}" autocomplete="off" />
+                    <p:inputMask id="provTelefono" value="#{proveedorBean.proveedor.provTelefono}" autocomplete="off" mask="99999999"/>
                     <p:outputLabel value="Correo electrónico"/>
                     <p:inputText id="provEmail" value="#{proveedorBean.proveedor.provEmail}" autocomplete="off" />
                     <p:outputLabel value="Persona jurídica: "/>

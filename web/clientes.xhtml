@@ -6,6 +6,7 @@ xmlns:p="http://primefaces.org/ui"
 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Gestion de Clientes</title>
+        <link rel="stylesheet" type="text/css" href="css/fondologin.css"/>
     </h:head>
     <h:body>
         <p:growl id="mensajes" autoUpdate="true" showDetail="true" life="3000"/>
@@ -13,11 +14,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
             <h:form id="formInsertar">
                 <h:panelGrid columns="6">
                     <p:outputLabel value="DUI"/>
-                    <p:inputText id="cliDui" value="#{clienteBean.cliente.cliDui}" autocomplete="off"
-                        required="true" requiredMessage="El DUI del cliente es obligatorio"/>
+                    <p:inputMask id="cliDui" value="#{clienteBean.cliente.cliDui}" autocomplete="off"
+                        required="true" requiredMessage="El DUI del cliente es obligatorio" mask="999999999"/>
                     <p:outputLabel value="NIT"/>
-                    <p:inputText id="cliNit" value="#{clienteBean.cliente.cliNit}" autocomplete="off"
-                        required="true" requiredMessage="El NIT del cliente es obligatorio"/>
+                    <p:inputMask id="cliNit" value="#{clienteBean.cliente.cliNit}" autocomplete="off"
+                        required="true" requiredMessage="El NIT del cliente es obligatorio" mask="99999999999999"/>
                     <p:outputLabel value="Nombre"/>
                     <p:inputText id="cliNombre" value="#{clienteBean.cliente.cliNombre}" autocomplete="off"
                         required="true" requiredMessage="El nombre del cliente es obligatorio"/>
@@ -28,8 +29,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                     <p:inputText id="cliDireccion" value="#{clienteBean.cliente.cliDireccion}" autocomplete="off"
                         required="true" requiredMessage="La dirección del cliente es obligatoria"/>
                     <p:outputLabel value="Teléfono"/>
-                    <p:inputText id="cliTelefono" value="#{clienteBean.cliente.cliTelefono}" autocomplete="off"
-                        required="true" requiredMessage="El teléfono del cliente es obligatorio"/>
+                    <p:inputMask id="cliTelefono" value="#{clienteBean.cliente.cliTelefono}" autocomplete="off"
+                        required="true" requiredMessage="El teléfono del cliente es obligatorio" mask="99999999"/>
                     <p:outputLabel value="Correo electrónico"/>
                     <p:inputText id="cliEmail" value="#{clienteBean.cliente.cliEmail}" autocomplete="off" />
                     <p:outputLabel value="Persona jurídica: "/>
